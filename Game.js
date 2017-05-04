@@ -14,20 +14,37 @@ module.exports = class Game {
   }
 
   loadUser(discordID) {
+    // Loads a user account from the user database using the discord user's ID
+    // for identification. If no user account exists for the passed ID, one is
+    // created.
+
     return this.dbFind(this.userDB, {'id': discordID})
       .then(docs => {
         let user
 
         if (docs.length > 0) {
-          user = User.fromDocument(docs[0])
+          return User.fromDocument(this, docs[0])
         } else {
-          user = User.create(discordID)
+          return this.dbInsert(this.userDB, {'id': discordID})
+            .then(() => User.create(this, discordID))
         }
-
+      })
+      .then(user => {
         this.userMap.set(discordID, user)
 
-        return user
+        return user.saveAll().then(() => user)
       })
+  }
+
+  getUser(discordID) {
+    // Gets a user account from a discord user ID. If there is no user account
+    // loaded for that ID yet, one is laoded.
+
+    if (this.userMap.has(discordID)) {
+      return Promise.resolve(this.userMap.get(discordID))
+    } else {
+      return this.loadUser(discordID)
+    }
   }
 
   setupBots(tokens) {

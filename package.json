@@ -2,6 +2,7 @@
   "dependencies": {
     "discord.js": "^11.1.0",
     "es6-promisify": "^5.0.0",
+    "fix-whitespace": "^1.0.3",
     "nedb": "^1.8.0",
     "node-fetch": "^1.6.3"
   }

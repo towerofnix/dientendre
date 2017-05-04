@@ -20,9 +20,9 @@ module.exports = class User {
     const newChannel = guild.channels.find('name', 'loc-' + newLocation)
 
     try {
-      const exitText = randomOfArray(this.getLocationData(oldLocation).exitText)
+      var exitText = randomOfArray(this.getLocationData(oldLocation).exitText)
         .replace(/@user/g, `<@!${discordUser.id}>`)
-      const entryText = randomOfArray(this.getLocationData(newLocation).entryText)
+      var entryText = randomOfArray(this.getLocationData(newLocation).entryText)
         .replace(/@user/g, `<@!${discordUser.id}>`)
     } catch(e) {
       return oldChannel.send(`_<@!${discordUser.id}> couldn't go there._`)

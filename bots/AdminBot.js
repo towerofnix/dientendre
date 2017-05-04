@@ -45,7 +45,7 @@ module.exports = class AdminBot extends BaseBot {
 
       if (msg.content.toLowerCase() === '.look') {
         this.game.getUser(msg.author.id)
-          .then(user => user.getLocationData())
+          .then(user => user.getLocationData(user.location))
           .then(location => {
             let { name, image, description } = location
 
@@ -56,6 +56,7 @@ module.exports = class AdminBot extends BaseBot {
 
             msg.channel.send({ embed })
           })
+          .catch(console.error)
       }
 
       if (msg.content.toLowerCase().startsWith('.goto ')) {

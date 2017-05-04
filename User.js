@@ -40,10 +40,12 @@ module.exports = class User {
     if (channel) {
       return channel.send(message, {reply: discordUser})
     } else {
-      console.warn(fixWS`
-        Attempted to send a message to ${discordUser.username}, but the room
-        of the location they're in doesn't exist!
-      `)
+      console.warn(
+        `Attempted to send a message to ${discordUser.username}, but the ` +
+        "channel of the location they're in doesn't exist!"
+      )
+
+      console.trace()
 
       return Promise.resolve()
     }

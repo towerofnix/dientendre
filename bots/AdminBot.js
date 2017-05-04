@@ -10,6 +10,19 @@ module.exports = class AdminBot extends BaseBot {
 
     this.game = game
 
+    this.client.on('guildMemberAdd', member => {
+      // create usr channel for this member
+      member.guild.createChannel(`usr-${member.id}`, 'text', [
+        {
+          id: member.id,
+          type: 'member',
+          allow: 0x00000400, // read messages
+        },
+      ]).then(channel => {
+        channel.send(`Welcome to **${member.guild.name}**!`)
+      }).catch(console.error)
+    })
+
     this.client.on('message', msg => {
       if (msg.content.toLowerCase() === '.ping') {
         msg.reply("Pong!")

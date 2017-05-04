@@ -11,6 +11,19 @@ module.exports = class AdminBot extends BaseBot {
     this.game = game
 
     this.client.on('message', msg => {
+      if (msg.content.toLowerCase() === '.help') {
+        msg.reply(
+          "Okay, here's some quick documentation to get you started:\n" +
+          "\n" +
+          "* .help – Presents this help message.\n" +
+          "* .ping – Gets the game server to quickly respond to you. If" +
+          " this doesn't work, the server is probably offline!\n" +
+          "* .goto (loc) – Teleports you to another location using the power" +
+          " of magic.\n" +
+          "* .whereami - Tells you what your current location is."
+        )
+      }
+
       if (msg.content.toLowerCase() === '.ping') {
         msg.reply("Pong!")
       }

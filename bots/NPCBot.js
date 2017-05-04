@@ -5,7 +5,7 @@ module.exports = class NPCBot extends BaseBot {
     super()
 
     this.name = name.toString()
-    this.location = 'bot-testing'
+    this.location = 'cool-place'
 
     this.client.on('message', message => {
       // NPCs should only be able to talk to people that are in the same

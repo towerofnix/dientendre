@@ -1,4 +1,5 @@
 const BaseBot = require('./BaseBot')
+const { RichEmbed } = require('discord.js')
 
 const fixWS = require('fix-whitespace')
 
@@ -25,9 +26,10 @@ module.exports = class AdminBot extends BaseBot {
 
     this.client.on('message', msg => {
       if (msg.content.toLowerCase() === '.ping') {
-        msg.reply("Pong!")
+        msg.channel.send("Pong!")
       }
 
+      /*
       if (msg.content.toLowerCase() === '.login') {
         msg.reply("Logging in!")
 
@@ -39,11 +41,20 @@ module.exports = class AdminBot extends BaseBot {
             `))
           )
       }
+      */
 
-      if (msg.content.toLowerCase() === '.whereami') {
+      if (msg.content.toLowerCase() === '.look') {
         this.game.getUser(msg.author.id)
-          .then(user => {
-            msg.reply(`My best guess would be *${user.location}*.`)
+          .then(user => user.getLocationData())
+          .then(location => {
+            let { name, image, description } = location
+
+            let embed = new RichEmbed()
+            embed.setTitle(name)
+            embed.setImage(image)
+            embed.setDescription(description)
+
+            msg.channel.send({ embed })
           })
       }
 
@@ -55,12 +66,8 @@ module.exports = class AdminBot extends BaseBot {
           .then(() => {
             return user.goTo(msg.content.slice(6, 36), msg.guild, msg.author)
           })
-          .then(
-            () => user.sendMessageAtLocation(
-              msg.guild, msg.author, "You're here now!"
-            ),
-
-            error => msg.reply(getErrorMessage(error, fixWS`
+          .catch(error =>
+            msg.channel.send(getErrorMessage(error, fixWS`
               But an error blocked your way!
             `))
           )

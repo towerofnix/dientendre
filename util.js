@@ -2,7 +2,7 @@ const fixWS = require('fix-whitespace')
 
 function getErrorMessage(error, title = 'There was an internal error!') {
   return fixWS`
-    ${title}
+    **${title}**
     Please send this message to an admin if you can:
     \`\`\`
     ${error.message}
@@ -31,8 +31,13 @@ function loadDatabase(db) {
   })
 }
 
+function randomOfArray(arr) {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
 module.exports = {
   getErrorMessage,
   getAuthenticationURL,
   loadDatabase,
+  randomOfArray,
 }

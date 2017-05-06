@@ -52,6 +52,11 @@ module.exports = class Game {
     // an object containing the various bot tokens used here.
 
     this.admin = new AdminBot(this)
+    this.admin.registerCommand(require('./commands/gotoCommand'))
+    this.admin.registerCommand(require('./commands/helpCommand'))
+    this.admin.registerCommand(require('./commands/loginCommand'))
+    this.admin.registerCommand(require('./commands/pingCommand'))
+    this.admin.registerCommand(require('./commands/whereamiCommand'))
 
     this.npcs = {
       geoffrey: new NPCBot('Geoffrey')

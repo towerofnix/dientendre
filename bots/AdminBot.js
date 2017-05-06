@@ -30,6 +30,12 @@ module.exports = class AdminBot extends BaseBot {
       )
     }
 
+    if (commandObj.description.length === 0) {
+      console.warn(
+        `Command with name "${commandObj.name}" has no description.`
+      )
+    }
+
     this.commands[commandObj.name] = commandObj
   }
 

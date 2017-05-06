@@ -2,17 +2,26 @@ const baseCommand = require('./baseCommand')
 
 module.exports = Object.assign(Object.create(baseCommand), {
   name: 'help',
+  description: (
+    "Presents a help message containing information about as many commands" +
+    " as is possible."
+  ),
 
   call(util) {
+    const commands = Object.values(util.adminBot.commands)
+
+    const commandsWithDocs = commands.filter(command => {
+      return command.description.length > 0
+    })
+
+    const docLines = Object.values(commandsWithDocs).map(command => {
+      return `**.${command.name}:** ${command.description}`
+    })
+
     util.message.reply(
       "Okay, here's some quick documentation to get you started:\n" +
       "\n" +
-      "* .help – Presents this help message.\n" +
-      "* .ping – Gets the game server to quickly respond to you. If this" +
-      " doesn't work, the server is probably offline!\n" +
-      "* .goto (loc) – Teleports you to another location using the power of" +
-      " magic.\n" +
-      "* .whereami - Tells you what your current location is."
+      docLines.join("\n")
     )
   }
 })

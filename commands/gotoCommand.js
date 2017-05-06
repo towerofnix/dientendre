@@ -2,6 +2,9 @@ const baseCommand = require('./baseCommand')
 
 module.exports = Object.assign(Object.create(baseCommand), {
   name: 'goto',
+  description: (
+    "Teleports you to any location you will by using the power of magic."
+  ),
 
   call(util, [newLocation]) {
     let user

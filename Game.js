@@ -51,7 +51,14 @@ module.exports = class Game {
     // Sets up the various Discord bots used by the game. Requires tokens as
     // an object containing the various bot tokens used here.
 
+    // The order registered dictates the order these commands will appear in
+    // the "help" command.
     this.admin = new AdminBot(this)
+    this.admin.registerCommand(require('./commands/helpCommand'))
+    this.admin.registerCommand(require('./commands/gotoCommand'))
+    this.admin.registerCommand(require('./commands/whereamiCommand'))
+    this.admin.registerCommand(require('./commands/pingCommand'))
+    this.admin.registerCommand(require('./commands/loginCommand'))
 
     this.npcs = {
       geoffrey: new NPCBot('Geoffrey')
